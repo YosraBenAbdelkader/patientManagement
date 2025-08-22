@@ -14,6 +14,10 @@ FROM openjdk:21-jdk AS runner
 
 WORKDIR /app
 
+# === gRPC debug logging ===
+ENV GRPC_TRACE=all
+ENV GRPC_VERBOSITY=DEBUG
+
 COPY --from=builder ./app/target/billing-service-0.0.1-SNAPSHOT.jar ./app.jar
 
 EXPOSE 4001
