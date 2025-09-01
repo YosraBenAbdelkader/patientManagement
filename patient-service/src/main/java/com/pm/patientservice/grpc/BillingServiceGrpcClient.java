@@ -27,8 +27,7 @@ public class BillingServiceGrpcClient {
         ManagedChannel channel = ManagedChannelBuilder.forAddress(serverAddress, serverPort).usePlaintext().build();
 
 
-        blockingStub = BillingServiceGrpc.newBlockingStub(channel)
-                .withDeadlineAfter(5, TimeUnit.SECONDS);
+        blockingStub = BillingServiceGrpc.newBlockingStub(channel);
     }
 
     public BillingResponse createBillingAccount(String patientId, String name, String email) {
@@ -42,7 +41,7 @@ public class BillingServiceGrpcClient {
         BillingResponse response;
         try {
             log.info("Calling blockingStub.createBillingAccount(...)");
-            response = blockingStub.createBillingAccount(request); // <-- likely stuck or fails silently
+            response = blockingStub.createBillingAccount(request);
             log.info("Received response: {}", response);
         } catch (Exception e) {
             log.error("gRPC call to BillingService failed", e.getMessage(), e);
